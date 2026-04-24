@@ -3,138 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recycle LLM Terminal - Multi-Tool</title>
+    <title>Recycle LLM Terminal | Ihor</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         [x-cloak] { display: none !important; }
-        :root { --main-green: #064e3b; --accent-yellow: #facc15; }
-        body { background-color: #f8fafc; color: #1e293b; font-family: sans-serif; }
-        .nav-bg { background-color: var(--main-green); }
-        .yellow-text { color: var(--accent-yellow); }
-        .btn-yellow { background-color: var(--accent-yellow); color: var(--main-green); }
-        .section-card { border-left: 4px solid var(--accent-yellow); background: white; }
+        body { background-color: #042f2e; color: #ecfdf5; font-family: 'monospace'; }
+        .accent-yellow { color: #facc15; }
+        .bg-yellow { background-color: #facc15; color: #064e3b; }
+        .border-yellow { border-color: #facc15; }
+        .card-bg { background-color: #064e3b; border: 1px solid #14532d; transition: all 0.2s; }
+        .card-bg:hover { border-color: #facc15; box-shadow: 0 0 15px rgba(250, 204, 21, 0.1); }
+        .nav-item { cursor: pointer; text-transform: uppercase; font-size: 0.75rem; font-weight: bold; }
+        .nav-item:hover { color: #facc15; text-decoration: underline; }
+        .active-nav { color: #facc15; border-bottom: 2px solid #facc15; }
+        pre { font-size: 0.8rem; line-height: 1.4; }
     </style>
 </head>
 <body x-data="{ 
     lang: 'ru', 
     section: 'home',
-    data: {
+    t: {
         ru: {
-            nav: ['Главная', 'Документация', 'Статьи', 'API', 'Контакты'],
-            hero: 'Управление LLM Терминалом',
-            s1_title: 'Добро пожаловать',
-            s1_text: 'Полнофункциональный интерфейс для переработки данных и управления нейросетями.',
-            s2_title: 'Документация CLI',
-            s2_text: 'Инструкции по работе с командной строкой и интеграции модулей.',
-            s3_title: 'Статьи и SEO',
-            s3_text: 'Здесь будут ваши статьи с низкочастотными ключами для продвижения.',
-            s4_title: 'API Доступ',
-            s4_text: 'Настройки и ключи для подключения внешних сервисов.',
-            s5_title: 'Контакты',
-            s5_text: 'Связь с разработчиком и поддержка проекта.'
+            nav: ['home', 'tools', 'articles', 'logs', 'contact'],
+            bio: 'Я решаю реальные проблемы переработки полимеров с помощью Large Language Models через терминал Linux. Без дипломов. Без корпоративных слайдов. Только команды, выводы и рабочие результаты.',
+            stats: ['7+ лет в индустрии', '12 LLM пайплайнов', '840k тонн CO₂', '23k+ строк скриптов'],
+            more: '24 статьи в архиве',
+            loc: 'Мюнхен, Германия'
         },
         en: {
-            nav: ['Home', 'Docs', 'Articles', 'API', 'Contacts'],
-            hero: 'LLM Terminal Control',
-            s1_title: 'Welcome',
-            s1_text: 'Full-featured interface for data recycling and AI management.',
-            s2_title: 'CLI Documentation',
-            s2_text: 'Instructions for command line operations and module integration.',
-            s3_title: 'Articles & SEO',
-            s3_text: 'This section is for your long-tail keyword articles.',
-            s4_title: 'API Access',
-            s4_text: 'Settings and keys for connecting external services.',
-            s5_title: 'Contacts',
-            s5_text: 'Developer contact and project support.'
+            nav: ['home', 'tools', 'articles', 'logs', 'contact'],
+            bio: 'I solve real polymer recycling problems using Large Language Models via Linux terminal. No diploma. No corporate slides. Just commands, outputs, and working results.',
+            stats: ['7+ years industry', '12 LLM pipelines', '840k tons CO₂', '23k+ lines of scripts'],
+            more: '24 more entries',
+            loc: 'Munich, DE'
         },
         de: {
-            nav: ['Startseite', 'Docs', 'Artikel', 'API', 'Kontakte'],
-            hero: 'LLM Terminal Steuerung',
-            s1_title: 'Willkommen',
-            s1_text: 'Voll funktionsfähige Schnittstelle für Datenrecycling und KI-Management.',
-            s2_title: 'CLI Dokumentation',
-            s2_text: 'Anweisungen für Befehlszeilenoperationen und Modulintegration.',
-            s3_title: 'Artikel & SEO',
-            s3_text: 'Dieser Bereich ist für Ihre Long-Tail-Keyword-Artikel gedacht.',
-            s4_title: 'API-Zugriff',
-            s4_text: 'Einstellungen und Schlüssel für die Anbindung externer Dienste.',
-            s5_title: 'Kontakte',
-            s5_text: 'Entwicklerkontakt und Projektunterstützung.'
+            nav: ['home', 'tools', 'artikel', 'logs', 'kontakt'],
+            bio: 'Ich löse reale Probleme beim Kunststoffrecycling mit LLMs über das Linux-Terminal. Kein Diplom. Keine Firmen-Slides. Nur Befehle, Ergebnisse und Resultate.',
+            stats: ['7+ Jahre Erfahrung', '12 LLM-Pipelines', '840k Tonnen CO₂', '23k+ Zeilen Code'],
+            more: '24 weitere Einträge',
+            loc: 'München, DE'
         }
     }
 }">
 
-    <nav class="nav-bg p-4 sticky top-0 z-50 shadow-xl">
+    <nav class="p-4 border-b border-green-900 sticky top-0 bg-[#042f2e]/95 backdrop-blur z-50">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <div class="font-black text-xl yellow-text uppercase italic">RecycleLLM</div>
+            <div class="flex items-center gap-2">
+                <span class="text-green-500 font-bold">ihor@recycle-llm:</span>
+                <span class="text-blue-400">~$</span>
+            </div>
             
-            <div class="hidden md:flex gap-6 text-white text-sm font-bold">
-                <button @click="section = 'home'" class="hover:text-yellow-400 transition" x-text="data[lang].nav[0]"></button>
-                <button @click="section = 'docs'" class="hover:text-yellow-400 transition" x-text="data[lang].nav[1]"></button>
-                <button @click="section = 'articles'" class="hover:text-yellow-400 transition" x-text="data[lang].nav[2]"></button>
-                <button @click="section = 'api'" class="hover:text-yellow-400 transition" x-text="data[lang].nav[3]"></button>
-                <button @click="section = 'contact'" class="hover:text-yellow-400 transition" x-text="data[lang].nav[4]"></button>
+            <div class="flex gap-6">
+                <template x-for="(item, index) in t[lang].nav">
+                    <button @click="section = item" :class="section === item ? 'active-nav' : ''" class="nav-item px-1" x-text="'~/' + item"></button>
+                </template>
             </div>
 
-            <div class="flex gap-2 bg-green-900 p-1 rounded border border-green-700">
-                <template x-for="l in ['ru', 'en', 'de']">
-                    <button @click="lang = l" :class="lang === l ? 'btn-yellow' : 'text-white'" class="px-2 py-1 rounded text-[10px] font-bold uppercase transition" x-text="l"></button>
-                </template>
+            <div class="flex border border-green-800 rounded text-[10px] font-bold overflow-hidden">
+                <button @click="lang='ru'" class="px-2 py-1" :class="lang=='ru' ? 'bg-yellow' : ''">RU</button>
+                <button @click="lang='en'" class="px-2 py-1" :class="lang=='en' ? 'bg-yellow' : ''">EN</button>
+                <button @click="lang='de'" class="px-2 py-1" :class="lang=='de' ? 'bg-yellow' : ''">DE</button>
             </div>
         </div>
     </nav>
 
-    <header class="nav-bg py-16 text-center border-t border-green-800">
-        <h1 class="text-4xl md:text-5xl font-black text-white mb-4 uppercase tracking-tight" x-text="data[lang].hero"></h1>
-        <div class="h-1 w-32 bg-yellow-400 mx-auto"></div>
-    </header>
-
-    <main class="max-w-5xl mx-auto py-12 px-6">
+    <main class="max-w-6xl mx-auto p-6 md:p-12">
         
-        <section x-show="section === 'home'" class="section-card p-8 rounded-lg shadow-sm">
-            <h2 class="text-2xl font-bold mb-4 flex items-center gap-3">
-                <span class="w-2 h-8 bg-green-800"></span>
-                <span x-text="data[lang].s1_title"></span>
-            </h2>
-            <p class="text-lg text-slate-600" x-text="data[lang].s1_text"></p>
-        </section>
+        <div x-show="section === 'home'">
+            <div class="mb-12">
+                <div class="text-green-500 mb-2"># whoami</div>
+                <h1 class="text-3xl md:text-5xl font-black accent-yellow mb-6">AI / LLM Engineering for Polymer Recycling</h1>
+                <p class="text-xl max-w-3xl leading-relaxed mb-8 text-slate-300" x-text="t[lang].bio"></p>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+                    <template x-for="stat in t[lang].stats">
+                        <div class="card-bg p-4 rounded text-center">
+                            <div class="accent-yellow text-xl font-bold" x-text="stat.split(' ')[0]"></div>
+                            <div class="text-[10px] uppercase opacity-60" x-text="stat.split(' ').slice(1).join(' ')"></div>
+                        </div>
+                    </template>
+                </div>
 
-        <section x-show="section === 'docs'" x-cloak class="section-card p-8 rounded-lg shadow-sm">
-            <h2 class="text-2xl font-bold mb-4" x-text="data[lang].s2_title"></h2>
-            <p class="mb-6 text-slate-600" x-text="data[lang].s2_text"></p>
-            <div class="bg-slate-900 p-4 rounded font-mono text-green-400 text-sm">
-                <p>$ recycle-cli --init</p>
-                <p>$ loading configuration...</p>
-                <p>$ status: ready</p>
-            </div>
-        </section>
-
-        <section x-show="section === 'articles'" x-cloak class="section-card p-8 rounded-lg shadow-sm">
-            <h2 class="text-2xl font-bold mb-4 text-green-900" x-text="data[lang].s3_title"></h2>
-            <p class="mb-8 text-slate-600" x-text="data[lang].s3_text"></p>
-            <div class="grid gap-4">
-                <div class="p-4 border border-slate-100 rounded hover:bg-slate-50 cursor-pointer transition">
-                    <h3 class="font-bold">Низкочастотный запрос #1...</h3>
-                    <p class="text-sm text-slate-500">Краткое описание статьи для SEO...</p>
+                <div class="flex gap-4">
+                    <button @click="section = 'tools'" class="bg-yellow px-6 py-2 font-bold uppercase text-sm">./show-tools.sh</button>
+                    <button @click="section = 'contact'" class="border border-yellow accent-yellow px-6 py-2 font-bold uppercase text-sm">contact --me</button>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section x-show="section === 'api'" x-cloak class="section-card p-8 rounded-lg shadow-sm">
-            <h2 class="text-2xl font-bold mb-4" x-text="data[lang].s4_title"></h2>
-            <p class="text-slate-600" x-text="data[lang].s4_text"></p>
-        </section>
+        <div x-show="section === 'tools'" x-cloak>
+            <div class="accent-yellow mb-6 italic">$ ls -la ~/tools/capabilities</div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="card-bg p-6 rounded relative">
+                    <span class="absolute top-2 right-2 text-[10px] text-green-500 border border-green-500 px-1">ACTIVE</span>
+                    <h3 class="font-bold mb-3 accent-yellow">polymer-classifier</h3>
+                    <p class="text-xs mb-4 opacity-70">LLM-powered classification of polymer waste streams from spectrometer data.</p>
+                    <div class="bg-black/30 p-2 rounded text-[10px] text-green-400 font-mono">
+                        $ cat resin.csv | python3 classify.py --model gpt-4o
+                    </div>
+                </div>
+                <div class="card-bg p-6 rounded relative">
+                    <span class="absolute top-2 right-2 text-[10px] text-green-500 border border-green-500 px-1">ACTIVE</span>
+                    <h3 class="font-bold mb-3 accent-yellow">melt-index-predictor</h3>
+                    <p class="text-xs mb-4 opacity-70">Regression pipeline for predicting MFI from process params.</p>
+                    <div class="bg-black/30 p-2 rounded text-[10px] text-green-400 font-mono">
+                        $ python3 melt_predict.py --temp 220 --pressure 4.2
+                    </div>
+                </div>
+                <div class="card-bg p-6 rounded relative">
+                    <span class="absolute top-2 right-2 text-[10px] text-green-500 border border-green-500 px-1">ACTIVE</span>
+                    <h3 class="font-bold mb-3 accent-yellow">degradation-analyzer</h3>
+                    <p class="text-xs mb-4 opacity-70">GC-MS output analysis for automated degradation pathways.</p>
+                    <div class="bg-black/30 p-2 rounded text-[10px] text-green-400 font-mono">
+                        $ gcms_export.sh | llm-analyze --threshold 0.85
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <section x-show="section === 'contact'" x-cloak class="section-card p-8 rounded-lg shadow-sm">
-            <h2 class="text-2xl font-bold mb-4" x-text="data[lang].s5_title"></h2>
-            <p class="text-slate-600" x-text="data[lang].s5_text"></p>
-        </section>
+        <div x-show="section === 'articles' || section === 'artikel'" x-cloak>
+            <div class="accent-yellow mb-6">$ ls -lt ~/articles/</div>
+            <div class="space-y-2">
+                <div class="card-bg p-4 flex justify-between items-center group">
+                    <div>
+                        <span class="text-xs opacity-40 mr-4 font-mono">2024-11-18</span>
+                        <span class="font-bold group-hover:text-yellow-400">building-a-polymer-classifier-with-gpt4o.md</span>
+                    </div>
+                    <span class="text-[10px] opacity-40">11 min read</span>
+                </div>
+                <div class="card-bg p-4 flex justify-between items-center group">
+                    <div>
+                        <span class="text-xs opacity-40 mr-4 font-mono">2024-10-05</span>
+                        <span class="font-bold group-hover:text-yellow-400">ollama-local-llm-for-plant-floor-data.md</span>
+                    </div>
+                    <span class="text-[10px] opacity-40">8 min read</span>
+                </div>
+                <div class="pt-4 text-center">
+                    <span class="text-xs opacity-40 italic" x-text="'$ cat .more_articles | wc -l → ' + t[lang].more"></span>
+                </div>
+            </div>
+        </div>
+
+        <div x-show="section === 'logs'" x-cloak>
+            <div class="accent-yellow mb-4">$ tail -f /var/log/system.log</div>
+            <div class="bg-black/40 p-6 rounded-lg font-mono text-xs text-green-500 leading-relaxed overflow-x-auto border border-green-900">
+                <p><span class="opacity-40">2024-11-22 08:41:03</span> <span class="text-white">[INFO]</span> classifier.py: Batch #4412 processed — 847 samples classified.</p>
+                <p><span class="opacity-40">2024-11-21 23:14:55</span> <span class="text-yellow-500">[WARN]</span> monitor.py: Extruder zone-3 temp deviation: 218°C (expected 214±2°C).</p>
+                <p><span class="opacity-40">2024-11-20 14:08:44</span> <span class="text-red-500">[ERROR]</span> gcms_analyze.sh: GC-MS export parser failed: unexpected delimiter.</p>
+                <p class="animate-pulse">_</p>
+            </div>
+        </div>
+
+        <div x-show="section === 'contact' || section === 'kontakt'" x-cloak>
+            <div class="accent-yellow mb-6">$ ./contact --me</div>
+            <div class="grid md:grid-cols-2 gap-12">
+                <form class="space-y-4">
+                    <div>
+                        <label class="block text-[10px] uppercase mb-1 opacity-50"># name</label>
+                        <input type="text" class="w-full bg-green-900/30 border border-green-800 p-2 outline-none focus:border-yellow-500">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase mb-1 opacity-50"># email</label>
+                        <input type="email" class="w-full bg-green-900/30 border border-green-800 p-2 outline-none focus:border-yellow-500">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase mb-1 opacity-50"># message</label>
+                        <textarea class="w-full bg-green-900/30 border border-green-800 p-2 h-32 outline-none focus:border-yellow-500"></textarea>
+                    </div>
+                    <button class="bg-yellow px-8 py-2 font-bold uppercase text-sm">send-message --encrypt</button>
+                </form>
+                <div class="space-y-6 text-sm">
+                    <div class="card-bg p-4 rounded">
+                        <div class="accent-yellow font-bold mb-2">$ cat ~/.config/location</div>
+                        <p x-text="'city: ' + t[lang].loc"></p>
+                        <p>availability: open to consulting</p>
+                    </div>
+                    <div class="card-bg p-4 rounded">
+                        <div class="accent-yellow font-bold mb-2">$ cat open_for.txt</div>
+                        <ul class="list-disc list-inside opacity-70">
+                            <li>LLM pipeline consulting</li>
+                            <li>Polymer process automation</li>
+                            <li>Technical writing & audits</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </main>
 
-    <footer class="text-center py-8 text-slate-400 text-xs uppercase tracking-widest">
-        <p>© 2026 Recycle LLM Terminal • IgorUspehov</p>
+    <footer class="max-w-6xl mx-auto p-12 border-t border-green-900 text-[10px] opacity-40 flex justify-between uppercase font-bold tracking-widest">
+        <div x-text="'ihor@recycle-llm-terminal ~ # ' + t[lang].loc"></div>
+        <div>github / linkedin / email</div>
     </footer>
 
 </body>
