@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,33 +17,32 @@
         .nav-item { cursor: pointer; text-transform: uppercase; font-size: 0.75rem; font-weight: bold; }
         .nav-item:hover { color: #facc15; text-decoration: underline; }
         .active-nav { color: #facc15; border-bottom: 2px solid #facc15; }
-        pre { font-size: 0.8rem; line-height: 1.4; }
     </style>
 </head>
 <body x-data="{ 
-    lang: 'ru', 
+    lang: 'en', 
     section: 'home',
     t: {
-        ru: {
-            nav: ['home', 'tools', 'articles', 'logs', 'contact'],
-            bio: 'Я решаю реальные проблемы переработки полимеров с помощью Large Language Models через терминал Linux. Без дипломов. Без корпоративных слайдов. Только команды, выводы и рабочие результаты.',
-            stats: ['7+ лет в индустрии', '12 LLM пайплайнов', '840k тонн CO₂', '23k+ строк скриптов'],
-            more: '24 статьи в архиве',
-            loc: 'Мюнхен, Германия'
-        },
         en: {
             nav: ['home', 'tools', 'articles', 'logs', 'contact'],
             bio: 'I solve real polymer recycling problems using Large Language Models via Linux terminal. No diploma. No corporate slides. Just commands, outputs, and working results.',
-            stats: ['7+ years industry', '12 LLM pipelines', '840k tons CO₂', '23k+ lines of scripts'],
-            more: '24 more entries',
+            stats: ['7+ years industry', '12 LLM pipelines', '840k tons CO2', '23k+ lines of scripts'],
+            btn_wa: 'Write to me',
             loc: 'Munich, DE'
         },
         de: {
             nav: ['home', 'tools', 'artikel', 'logs', 'kontakt'],
             bio: 'Ich löse reale Probleme beim Kunststoffrecycling mit LLMs über das Linux-Terminal. Kein Diplom. Keine Firmen-Slides. Nur Befehle, Ergebnisse und Resultate.',
-            stats: ['7+ Jahre Erfahrung', '12 LLM-Pipelines', '840k Tonnen CO₂', '23k+ Zeilen Code'],
-            more: '24 weitere Einträge',
+            stats: ['7+ Jahre Erfahrung', '12 LLM-Pipelines', '840k Tonnen CO2', '23k+ Zeilen Code'],
+            btn_wa: 'Schreiben Sie mir',
             loc: 'München, DE'
+        },
+        ru: {
+            nav: ['home', 'tools', 'articles', 'logs', 'contact'],
+            bio: 'Я решаю реальные проблемы переработки полимеров с помощью Large Language Models через терминал Linux. Без дипломов. Без корпоративных слайдов. Только команды, выводы и рабочие результаты.',
+            stats: ['7+ лет в индустрии', '12 LLM пайплайнов', '840k тонн CO2', '23k+ строк скриптов'],
+            btn_wa: 'Напишите',
+            loc: 'Мюнхен, Германия'
         }
     }
 }">
@@ -62,19 +61,18 @@
             </div>
 
             <div class="flex border border-green-800 rounded text-[10px] font-bold overflow-hidden">
-                <button @click="lang='ru'" class="px-2 py-1" :class="lang=='ru' ? 'bg-yellow' : ''">RU</button>
                 <button @click="lang='en'" class="px-2 py-1" :class="lang=='en' ? 'bg-yellow' : ''">EN</button>
                 <button @click="lang='de'" class="px-2 py-1" :class="lang=='de' ? 'bg-yellow' : ''">DE</button>
+                <button @click="lang='ru'" class="px-2 py-1" :class="lang=='ru' ? 'bg-yellow' : ''">RU</button>
             </div>
         </div>
     </nav>
 
     <main class="max-w-6xl mx-auto p-6 md:p-12">
-        
         <div x-show="section === 'home'">
             <div class="mb-12">
                 <div class="text-green-500 mb-2"># whoami</div>
-                <h1 class="text-3xl md:text-5xl font-black accent-yellow mb-6">AI / LLM Engineering for Polymer Recycling</h1>
+                <h1 class="text-3xl md:text-5xl font-black accent-yellow mb-6 uppercase">AI / LLM Engineering for Polymer Recycling</h1>
                 <p class="text-xl max-w-3xl leading-relaxed mb-8 text-slate-300" x-text="t[lang].bio"></p>
                 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
@@ -86,9 +84,9 @@
                     </template>
                 </div>
 
-                <div class="flex gap-4">
+                <div class="flex flex-wrap gap-4">
                     <button @click="section = 'tools'" class="bg-yellow px-6 py-2 font-bold uppercase text-sm">./show-tools.sh</button>
-                    <button @click="section = 'contact'" class="border border-yellow accent-yellow px-6 py-2 font-bold uppercase text-sm">contact --me</button>
+                    <a href="https://wa.me/4915258400610" target="_blank" class="border border-yellow accent-yellow px-6 py-2 font-bold uppercase text-sm hover:bg-yellow hover:text-[#042f2e] transition-colors" x-text="t[lang].btn_wa"></a>
                 </div>
             </div>
         </div>
@@ -100,104 +98,31 @@
                     <span class="absolute top-2 right-2 text-[10px] text-green-500 border border-green-500 px-1">ACTIVE</span>
                     <h3 class="font-bold mb-3 accent-yellow">polymer-classifier</h3>
                     <p class="text-xs mb-4 opacity-70">LLM-powered classification of polymer waste streams from spectrometer data.</p>
-                    <div class="bg-black/30 p-2 rounded text-[10px] text-green-400 font-mono">
-                        $ cat resin.csv | python3 classify.py --model gpt-4o
-                    </div>
+                    <div class="bg-black/30 p-2 rounded text-[10px] text-green-400 font-mono">$ cat resin.csv | python3 classify.py</div>
                 </div>
                 <div class="card-bg p-6 rounded relative">
                     <span class="absolute top-2 right-2 text-[10px] text-green-500 border border-green-500 px-1">ACTIVE</span>
                     <h3 class="font-bold mb-3 accent-yellow">melt-index-predictor</h3>
-                    <p class="text-xs mb-4 opacity-70">Regression pipeline for predicting MFI from process params.</p>
-                    <div class="bg-black/30 p-2 rounded text-[10px] text-green-400 font-mono">
-                        $ python3 melt_predict.py --temp 220 --pressure 4.2
-                    </div>
+                    <p class="text-xs mb-4 opacity-70">Predicting Melt Flow Index drift from real-time extruder process logs.</p>
+                    <div class="bg-black/30 p-2 rounded text-[10px] text-green-400 font-mono">$ python3 melt_predict.py --temp 220</div>
                 </div>
                 <div class="card-bg p-6 rounded relative">
                     <span class="absolute top-2 right-2 text-[10px] text-green-500 border border-green-500 px-1">ACTIVE</span>
                     <h3 class="font-bold mb-3 accent-yellow">degradation-analyzer</h3>
-                    <p class="text-xs mb-4 opacity-70">GC-MS output analysis for automated degradation pathways.</p>
-                    <div class="bg-black/30 p-2 rounded text-[10px] text-green-400 font-mono">
-                        $ gcms_export.sh | llm-analyze --threshold 0.85
-                    </div>
+                    <p class="text-xs mb-4 opacity-70">Shell pipeline that feeds GC-MS output to an LLM for automated pathway analysis.</p>
+                    <div class="bg-black/30 p-2 rounded text-[10px] text-green-400 font-mono">$ gcms_export.sh | llm-analyze</div>
                 </div>
             </div>
         </div>
-
-        <div x-show="section === 'articles' || section === 'artikel'" x-cloak>
-            <div class="accent-yellow mb-6">$ ls -lt ~/articles/</div>
-            <div class="space-y-2">
-                <div class="card-bg p-4 flex justify-between items-center group">
-                    <div>
-                        <span class="text-xs opacity-40 mr-4 font-mono">2024-11-18</span>
-                        <span class="font-bold group-hover:text-yellow-400">building-a-polymer-classifier-with-gpt4o.md</span>
-                    </div>
-                    <span class="text-[10px] opacity-40">11 min read</span>
-                </div>
-                <div class="card-bg p-4 flex justify-between items-center group">
-                    <div>
-                        <span class="text-xs opacity-40 mr-4 font-mono">2024-10-05</span>
-                        <span class="font-bold group-hover:text-yellow-400">ollama-local-llm-for-plant-floor-data.md</span>
-                    </div>
-                    <span class="text-[10px] opacity-40">8 min read</span>
-                </div>
-                <div class="pt-4 text-center">
-                    <span class="text-xs opacity-40 italic" x-text="'$ cat .more_articles | wc -l → ' + t[lang].more"></span>
-                </div>
-            </div>
-        </div>
-
-        <div x-show="section === 'logs'" x-cloak>
-            <div class="accent-yellow mb-4">$ tail -f /var/log/system.log</div>
-            <div class="bg-black/40 p-6 rounded-lg font-mono text-xs text-green-500 leading-relaxed overflow-x-auto border border-green-900">
-                <p><span class="opacity-40">2024-11-22 08:41:03</span> <span class="text-white">[INFO]</span> classifier.py: Batch #4412 processed — 847 samples classified.</p>
-                <p><span class="opacity-40">2024-11-21 23:14:55</span> <span class="text-yellow-500">[WARN]</span> monitor.py: Extruder zone-3 temp deviation: 218°C (expected 214±2°C).</p>
-                <p><span class="opacity-40">2024-11-20 14:08:44</span> <span class="text-red-500">[ERROR]</span> gcms_analyze.sh: GC-MS export parser failed: unexpected delimiter.</p>
-                <p class="animate-pulse">_</p>
-            </div>
-        </div>
-
-        <div x-show="section === 'contact' || section === 'kontakt'" x-cloak>
-            <div class="accent-yellow mb-6">$ ./contact --me</div>
-            <div class="grid md:grid-cols-2 gap-12">
-                <form class="space-y-4">
-                    <div>
-                        <label class="block text-[10px] uppercase mb-1 opacity-50"># name</label>
-                        <input type="text" class="w-full bg-green-900/30 border border-green-800 p-2 outline-none focus:border-yellow-500">
-                    </div>
-                    <div>
-                        <label class="block text-[10px] uppercase mb-1 opacity-50"># email</label>
-                        <input type="email" class="w-full bg-green-900/30 border border-green-800 p-2 outline-none focus:border-yellow-500">
-                    </div>
-                    <div>
-                        <label class="block text-[10px] uppercase mb-1 opacity-50"># message</label>
-                        <textarea class="w-full bg-green-900/30 border border-green-800 p-2 h-32 outline-none focus:border-yellow-500"></textarea>
-                    </div>
-                    <button class="bg-yellow px-8 py-2 font-bold uppercase text-sm">send-message --encrypt</button>
-                </form>
-                <div class="space-y-6 text-sm">
-                    <div class="card-bg p-4 rounded">
-                        <div class="accent-yellow font-bold mb-2">$ cat ~/.config/location</div>
-                        <p x-text="'city: ' + t[lang].loc"></p>
-                        <p>availability: open to consulting</p>
-                    </div>
-                    <div class="card-bg p-4 rounded">
-                        <div class="accent-yellow font-bold mb-2">$ cat open_for.txt</div>
-                        <ul class="list-disc list-inside opacity-70">
-                            <li>LLM pipeline consulting</li>
-                            <li>Polymer process automation</li>
-                            <li>Technical writing & audits</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </main>
 
     <footer class="max-w-6xl mx-auto p-12 border-t border-green-900 text-[10px] opacity-40 flex justify-between uppercase font-bold tracking-widest">
         <div x-text="'ihor@recycle-llm-terminal ~ # ' + t[lang].loc"></div>
-        <div>github / linkedin / email</div>
+        <div class="flex gap-4">
+            <a href="https://github.com/igoruspehov" class="hover:text-yellow-400">github</a>
+            <span>linkedin</span>
+            <a href="mailto:ihor@recycle-llm.dev" class="hover:text-yellow-400">email</a>
+        </div>
     </footer>
-
 </body>
 </html>
