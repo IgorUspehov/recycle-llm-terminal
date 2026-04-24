@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chalk filler dosing in HDPE via CLI | recycle-llm-terminal</title>
+<meta name="description" content="LLM-assisted chalk filler dosing calculation for HDPE recycled compound. Target MFI stability, optimal CaCO3 loading.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="scanline"></div><div class="noise"></div>
+<nav class="nav">
+  <div class="nav-logo">~/recycle-llm-terminal<span class="cursor-blink">_</span></div>
+  <div class="nav-links">
+    <a href="../index.html" class="nav-link">home</a>
+    <a href="../tools.html" class="nav-link">tools</a>
+    <a href="index.html" class="nav-link active">articles</a>
+    <a href="../logs/index.html" class="nav-link">logs</a>
+    <a href="../contact.html" class="nav-link">contact</a>
+  </div>
+</nav>
+<main class="article-main">
+  <div class="article-meta">
+    <span class="art-date">2026-04-15</span>
+    <span class="art-tag">formulation</span><span class="art-tag">HDPE</span><span class="art-tag">CaCO3</span>
+  </div>
+  <div class="article-body">
+    <h1>Chalk filler dosing in HDPE via CLI — formulation experiment</h1>
+    <p>Task: determine the optimal CaCO3 loading in a 70% post-consumer HDPE canister regrind + 30% chalk compound for injection-moulded parts. Requirement: MFI must remain ≥ 4 g/10min (190°C/5kg), notched impact not below 3 kJ/m².</p>
+    <h2>The command</h2>
+    <div class="terminal-block">
+      <div class="t-prompt">ihor@recycle-llm:~$ llm "formulation: 70% post-consumer HDPE canister regrind MFI 0.8 (190/2.16) + CaCO3 uncoated 3 micron. Target: MFI min 4 g/10min at 190C/5kg after compounding, notched Charpy impact min 3 kJ/m2. What is max CaCO3 % loading, coupling agent needed?"</div>
+    </div>
+    <h2>Model output</h2>
+    <div class="terminal-block">
+      <div class="t-output">
+Analysis for HDPE regrind MFI 0.8 (190/2.16) + uncoated CaCO3 3µm:<br><br>
+<span class="highlight">MFI conversion note:</span> MFI 0.8 at 2.16kg ≈ MFI 4.5–5.5 at 5kg for HDPE<br>
+(correction factor ~5–7x for HDPE density range 0.955–0.960)<br><br>
+<span class="ok">Max CaCO3 loading for MFI target:</span> 25–30%<br>
+Above 30%: viscosity rises sharply, MFI at 5kg drops below 3.5 g/10min<br><br>
+<span class="highlight">Impact warning:</span> uncoated CaCO3 causes stress concentration.<br>
+At 30% loading: expected Charpy notched ~2.2–2.8 kJ/m² — BELOW TARGET<br><br>
+<span class="ok">Recommendation:</span><br>
+— Use stearic acid coated CaCO3 (0.8–1.2% coating) — impact +35–40%<br>
+— OR add 3–5% HDPE-g-MAH coupling agent (e.g. Fusabond E226)<br>
+— Combination: 25% coated CaCO3 + 3% compatibilizer = impact ~3.4 kJ/m²<br><br>
+Suggested compound: 72% HDPE regrind + 25% coated CaCO3 + 3% HDPE-g-MAH
+      </div>
+    </div>
+    <h2>My assessment</h2>
+    <p class="comment">The MFI correction factor is correct. The impact warning for uncoated CaCO3 is critical and often ignored — I've seen exactly this problem on lines running uncoated filler. The Fusabond recommendation is standard and practical. The 25% coated + 3% compatibilizer formula is a real recipe I would actually run.</p>
+    <h2>Conclusion</h2>
+    <p>The model correctly identified the impact problem with uncoated filler before I mentioned it. That's the useful part — it prompts you to think about what you might have overlooked. Recipe is production-ready as a starting point.</p>
+  </div>
+  <div style="margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+    <a href="index.html" class="btn-terminal">← back to articles</a>
+  </div>
+</main>
+<footer class="footer">
+  <div class="footer-left">ihor@recycle-llm-terminal ~ # Munich, DE</div>
+  <div class="footer-right">
+    <a href="https://github.com/IgorUspehov/recycle-llm-terminal" target="_blank" class="footer-link">github</a>
+    <a href="https://igoruspehov.github.io/polymer-consult/" target="_blank" class="footer-link">polymer-consult</a>
+  </div>
+</footer>
+</body>
+</html>

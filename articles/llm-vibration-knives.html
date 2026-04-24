@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Granulator Knife Wear — LLM Diagnostics | recycle-llm-terminal</title>
+<meta name="description" content="Using LLM to diagnose granulator knife wear from vibration and throughput data. Agglomerator diagnostics via terminal.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="scanline"></div><div class="noise"></div>
+<nav class="nav">
+  <div class="nav-logo">~/recycle-llm-terminal<span class="cursor-blink">_</span></div>
+  <div class="nav-links">
+    <a href="../index.html" class="nav-link">home</a>
+    <a href="../tools.html" class="nav-link">tools</a>
+    <a href="index.html" class="nav-link active">articles</a>
+    <a href="../logs/index.html" class="nav-link">logs</a>
+    <a href="../contact.html" class="nav-link">contact</a>
+  </div>
+</nav>
+<main class="article-main">
+  <div class="article-meta">
+    <span class="art-date">2026-04-10</span>
+    <span class="art-tag">diagnostics</span><span class="art-tag">granulator</span><span class="art-tag">knife wear</span>
+  </div>
+  <div class="article-body">
+    <h1>Granulator knife wear — LLM vibration pattern analysis</h1>
+    <p>Situation: shredder-compactor running PP film regrind shows increased vibration at 3–4 Hz, throughput dropped 8% over 2 weeks, particle size distribution widened. Knives last changed 340 operating hours ago.</p>
+    <h2>The command</h2>
+    <div class="terminal-block">
+      <div class="t-prompt">ihor@recycle-llm:~$ ollama run mistral</div>
+      <div class="t-cmd">&gt;&gt;&gt; Shredder-compactor processing PP film. Symptoms: vibration increased at 3-4 Hz, throughput -8% over 14 days, pellet size distribution wider than spec. Knives: 340h since last change. Diagnose: worn knives or other cause? What to check first?</div>
+    </div>
+    <h2>Model output</h2>
+    <div class="terminal-block">
+      <div class="t-output">
+Symptom pattern analysis:<br><br>
+<span class="highlight">Primary diagnosis: knife wear (high probability ~75%)</span><br>
+— 340h is within typical wear range for PP film (300–500h depending on filler content)<br>
+— 3–4 Hz vibration = rotor imbalance from uneven blade clearance<br>
+— Throughput drop + size distribution widening = classic blunt knife signature<br><br>
+<span class="ok">Secondary candidates:</span><br>
+— Screen mesh partial blockage (check: pressure drop across screen)<br>
+— Feed rate inconsistency (belt scale drift?)<br>
+— Rotor bearing wear (check: vibration at rotor RPM frequency, not 3-4 Hz)<br><br>
+<span class="highlight">Check order:</span><br>
+1. Measure knife-to-bed clearance (spec: 0.1–0.3mm, worn: >0.5mm)<br>
+2. Inspect screen — clean if >15% blocked<br>
+3. Check rotor balance — remove one knife, see if vibration shifts frequency<br>
+4. If clearance >0.5mm: replace or regrind knives<br><br>
+<span class="ok">Do NOT:</span> increase rotor RPM to compensate — accelerates wear, thermal risk.
+      </div>
+    </div>
+    <h2>My assessment</h2>
+    <p class="comment">The 3–4 Hz vibration as rotor imbalance indicator is correct. The 300–500h wear range for PP film is realistic — PP without glass filler sits around 400h in my experience. The check order is exactly what I'd do: clearance first, then screen. The "do not increase RPM" note is important and commonly violated.</p>
+    <h2>Conclusion</h2>
+    <p>For this type of diagnostic — pattern matching against known failure modes — LLM performs well. It doesn't know your machine, but it knows the failure physics. Combine its output with your measurement data.</p>
+  </div>
+  <div style="margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+    <a href="index.html" class="btn-terminal">← back to articles</a>
+  </div>
+</main>
+<footer class="footer">
+  <div class="footer-left">ihor@recycle-llm-terminal ~ # Munich, DE</div>
+  <div class="footer-right">
+    <a href="https://github.com/IgorUspehov/recycle-llm-terminal" target="_blank" class="footer-link">github</a>
+    <a href="https://igoruspehov.github.io/polymer-consult/" target="_blank" class="footer-link">polymer-consult</a>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terminal Logs | recycle-llm-terminal</title>
+<meta name="description" content="Raw terminal session logs: LLM commands for polymer recycling engineering. Ollama, llm CLI, real prompts and outputs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="scanline"></div><div class="noise"></div>
+<nav class="nav">
+  <div class="nav-logo">~/recycle-llm-terminal<span class="cursor-blink">_</span></div>
+  <div class="nav-links">
+    <a href="../index.html" class="nav-link">home</a>
+    <a href="../tools.html" class="nav-link">tools</a>
+    <a href="../articles/index.html" class="nav-link">articles</a>
+    <a href="index.html" class="nav-link active">logs</a>
+    <a href="../contact.html" class="nav-link">contact</a>
+  </div>
+</nav>
+<main class="main">
+  <div class="prompt-line">
+    <span class="prompt-user">ihor@recycle-llm</span><span class="prompt-sep">:</span><span class="prompt-dir">~/logs</span><span class="prompt-dollar">$</span>
+    <span>tail -n 100 session.log</span>
+  </div>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="prompt-dollar">#</span> Recent sessions — raw terminal output
+    </div>
+    <div class="log-full">
+
+      <div class="log-full-entry">
+        <div class="lfe-header">
+          <span class="lfe-ts">[2026-04-24 09:12:34]</span>
+          <span class="lfe-model">ollama · mistral:latest</span>
+        </div>
+        <div class="lfe-cmd">$ ollama run mistral "PP weld line — injection pressure 1400 bar, melt temp 230°C, gate 0.8mm — diagnose"</div>
+        <div class="lfe-output">
+Weld line weakness at these parameters — likely causes:<br>
+1. Gate 0.8mm too small for wall thickness — shear heating excessive, material degrades at gate<br>
+2. Melt front temperature at weld: estimated 215–218°C (10–15°C drop before merge)<br>
+3. PP at weld line bonds weakly below 220°C effective temperature<br>
+Recommendation: increase gate to 1.0–1.2mm, reduce injection speed 15%, check mould vent.
+        </div>
+        <div class="lfe-result ok">✓ USEFUL — gate size issue confirmed by mould designer next day</div>
+      </div>
+
+      <div class="log-full-entry">
+        <div class="lfe-header">
+          <span class="lfe-ts">[2026-04-23 16:40:17]</span>
+          <span class="lfe-model">llm CLI · claude-3-5-sonnet</span>
+        </div>
+        <div class="lfe-cmd">$ llm "LDPE film: streaks at 60m/min — diagnose die head contamination or cooling ring"</div>
+        <div class="lfe-output">
+Streak pattern at high speed in LDPE blown film — differential diagnosis:<br>
+Die contamination: streaks fixed position, visible at low and high speed<br>
+Cooling ring imbalance: streaks rotate with layflat folding, worse at speed<br>
+Melt fracture onset: chevron pattern, not linear streaks<br>
+At 60m/min: if streaks appeared when speed increased — cooling ring turbulence (most likely).<br>
+Check: air distribution uniformity, ring height from die exit (optimal: 50–80mm for LDPE).
+        </div>
+        <div class="lfe-result ok">✓ USEFUL — cooling ring height was 110mm, lowered to 70mm, streaks resolved</div>
+      </div>
+
+      <div class="log-full-entry">
+        <div class="lfe-header">
+          <span class="lfe-ts">[2026-04-22 11:05:42]</span>
+          <span class="lfe-model">ollama · codellama:7b-instruct</span>
+        </div>
+        <div class="lfe-cmd">$ ollama run codellama "python script: monitor extruder amperage csv, flag +15% deviation from rolling average"</div>
+        <div class="lfe-output">
+import pandas as pd<br>
+import sys<br>
+<br>
+def monitor_amperage(csv_path, window=20, threshold=0.15):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;df = pd.read_csv(csv_path, parse_dates=['timestamp'])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;df['rolling_avg'] = df['amperage'].rolling(window=window).mean()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;df['deviation'] = (df['amperage'] - df['rolling_avg']) / df['rolling_avg']<br>
+&nbsp;&nbsp;&nbsp;&nbsp;flags = df[df['deviation'] > threshold]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if not flags.empty:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(f"ALERT: {len(flags)} deviation events detected")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(flags[['timestamp','amperage','rolling_avg','deviation']].to_string())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("OK: no deviations above threshold")<br>
+<br>
+if __name__ == '__main__':<br>
+&nbsp;&nbsp;&nbsp;&nbsp;monitor_amperage(sys.argv[1])
+        </div>
+        <div class="lfe-result ok">✓ WORKING — script ran on real csv data, caught 3 events, used in production</div>
+      </div>
+
+      <div class="log-full-entry">
+        <div class="lfe-header">
+          <span class="lfe-ts">[2026-04-20 14:22:08]</span>
+          <span class="lfe-model">ollama · mistral:latest</span>
+        </div>
+        <div class="lfe-cmd">$ ollama run mistral "ABS regrind: yellowing at 240°C processing. Source: post-consumer housings mix. Cause and fix."</div>
+        <div class="lfe-output">
+ABS yellowing at 240°C from post-consumer housing mix — causes ranked:<br>
+1. Thermal oxidation of butadiene rubber phase (primary) — ABS rubber begins degrading above 230°C<br>
+2. Residual flame retardant decomposition (BR/Sb system common in housings) — releases HBr<br>
+3. Contamination: HIPS or PS fraction — lower degradation onset<br>
+Fix options:<br>
+— Reduce processing temp to 220–225°C (most effective)<br>
+— Add Irgafos 168 (0.15%) + Irganox 1076 (0.1%) before compounding<br>
+— Sort out FR-grade housings separately if possible
+        </div>
+        <div class="lfe-result warn">⚠ PARTIAL — FR contamination was the actual primary cause (confirmed by XRF), but temp advice still correct</div>
+      </div>
+
+    </div>
+  </section>
+</main>
+<footer class="footer">
+  <div class="footer-left">ihor@recycle-llm-terminal ~ # Munich, DE</div>
+  <div class="footer-right">
+    <a href="https://github.com/IgorUspehov/recycle-llm-terminal" target="_blank" class="footer-link">github</a>
+    <a href="https://igoruspehov.github.io/polymer-consult/" target="_blank" class="footer-link">polymer-consult</a>
+  </div>
+</footer>
+</body>
+</html>

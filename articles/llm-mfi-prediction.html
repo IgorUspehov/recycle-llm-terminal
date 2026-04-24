@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MFI Drift Prediction LLDPE | recycle-llm-terminal</title>
+<meta name="description" content="Using LLM to predict MFI drift in LLDPE multilayer film regrind over multiple reprocessing passes. CLI approach, Mistral 7B.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="scanline"></div><div class="noise"></div>
+<nav class="nav">
+  <div class="nav-logo">~/recycle-llm-terminal<span class="cursor-blink">_</span></div>
+  <div class="nav-links">
+    <a href="../index.html" class="nav-link">home</a>
+    <a href="../tools.html" class="nav-link">tools</a>
+    <a href="index.html" class="nav-link active">articles</a>
+    <a href="../logs/index.html" class="nav-link">logs</a>
+    <a href="../contact.html" class="nav-link">contact</a>
+  </div>
+</nav>
+<main class="article-main">
+  <div class="article-meta">
+    <span class="art-date">2026-04-18</span>
+    <span class="art-tag">MFI</span><span class="art-tag">LLDPE</span><span class="art-tag">multilayer</span>
+  </div>
+  <div class="article-body">
+    <h1>MFI drift prediction for LLDPE multilayer regrind</h1>
+    <p>Material: LLDPE/LDPE multilayer stretch film regrind, 3 passes through granulator. Initial MFI: 1.8 g/10min (190°C/2.16kg). Question: how much will MFI shift after 2 more reprocessing cycles?</p>
+    <h2>The command</h2>
+    <div class="terminal-block">
+      <div class="t-prompt">ihor@recycle-llm:~$ ollama run mistral</div>
+      <div class="t-cmd">&gt;&gt;&gt; LLDPE/LDPE multilayer film regrind, starting MFI 1.8 g/10min (190C/2.16kg), already 3 passes through extruder at 200-215°C. No antioxidant added. Predict MFI after 2 more reprocessing passes. Explain mechanism.</div>
+    </div>
+    <h2>Model output</h2>
+    <div class="terminal-block">
+      <div class="t-output">
+For LLDPE without antioxidant protection after thermal history of 3 passes:<br><br>
+<span class="highlight">Dominant mechanism:</span> thermo-oxidative chain scission (MFI increases)<br>
+Secondary: minor crosslinking in LDPE fraction (partially offsetting)<br><br>
+<span class="ok">Predicted MFI after pass 4:</span> ~2.3–2.5 g/10min (+25–38%)<br>
+<span class="ok">Predicted MFI after pass 5:</span> ~3.0–3.5 g/10min (+65–95% from original)<br><br>
+Critical warning: above MFI 3.0 the film regrind becomes unsuitable for blown film<br>
+blend ratio above 30% without mechanical property compensation.<br><br>
+Recommendation: add 0.1–0.15% Irganox 1076 before pass 4 to limit drift to +15%.
+      </div>
+    </div>
+    <h2>My assessment</h2>
+    <p class="comment">Prediction range is realistic. In my practice with similar multilayer LLDPE/LDPE I've seen +20–40% MFI jump per pass without AO, so the model's numbers are in the correct range. The Irganox 1076 recommendation is appropriate — lower volatility than 1010 for film applications. The 30% blend limit note is also practical.</p>
+    <h2>Conclusion</h2>
+    <p>LLM gives a useful ballpark for MFI drift trajectory. Not a substitute for lab measurement, but helps plan when to add stabilizer and at what blend ratio to cap regrind content.</p>
+  </div>
+  <div style="margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+    <a href="index.html" class="btn-terminal">← back to articles</a>
+  </div>
+</main>
+<footer class="footer">
+  <div class="footer-left">ihor@recycle-llm-terminal ~ # Munich, DE</div>
+  <div class="footer-right">
+    <a href="https://github.com/IgorUspehov/recycle-llm-terminal" target="_blank" class="footer-link">github</a>
+    <a href="https://igoruspehov.github.io/polymer-consult/" target="_blank" class="footer-link">polymer-consult</a>
+  </div>
+</footer>
+</body>
+</html>

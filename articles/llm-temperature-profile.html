@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extruder temperature profile via Ollama — HDPE regrind | recycle-llm-terminal</title>
+<meta name="description" content="Using Ollama + Mistral 7B via Linux terminal to calculate zone-by-zone temperature profile for HDPE regrind extrusion at 250 kg/h. Real command, real output.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="scanline"></div>
+<div class="noise"></div>
+
+<nav class="nav">
+  <div class="nav-logo">~/recycle-llm-terminal<span class="cursor-blink">_</span></div>
+  <div class="nav-links">
+    <a href="../index.html" class="nav-link">home</a>
+    <a href="../tools.html" class="nav-link">tools</a>
+    <a href="index.html" class="nav-link active">articles</a>
+    <a href="../logs/index.html" class="nav-link">logs</a>
+    <a href="../contact.html" class="nav-link">contact</a>
+  </div>
+</nav>
+
+<main class="article-main">
+
+  <div class="article-meta">
+    <span class="art-date">2026-04-20</span>
+    <span class="art-tag">temperature</span>
+    <span class="art-tag">HDPE</span>
+    <span class="art-tag">Ollama</span>
+    <span class="art-tag">Mistral 7B</span>
+  </div>
+
+  <div class="article-body">
+
+    <h1>Extruder temperature profile via Ollama — HDPE regrind case</h1>
+
+    <p>
+      Task: calculate a zone-by-zone barrel temperature profile for a single-screw extruder
+      running HDPE regrind (post-consumer canister material, MFI ~0.6 g/10min at 190°C/2.16kg).
+      Output rate target: 250 kg/h. Screw diameter: 90mm. L/D: 30.
+    </p>
+
+    <h2>The command</h2>
+
+    <div class="terminal-block">
+      <div class="t-prompt">ihor@recycle-llm:~$ ollama run mistral</div>
+      <div class="t-cmd">
+        &gt;&gt;&gt; You are a polymer extrusion engineer. Calculate a zone-by-zone barrel temperature
+        profile for a single-screw extruder: material HDPE regrind (post-consumer canisters),
+        MFI 0.6 g/10min (190C/2.16kg), screw D=90mm, L/D=30, target throughput 250 kg/h.
+        Provide: feed zone, compression zone (3 zones), metering zone, adapter, die head.
+        Format as a table with zone name, temperature, and reasoning note.
+      </div>
+    </div>
+
+    <h2>Model output (Mistral 7B, Q4_K_M)</h2>
+
+    <div class="terminal-block">
+      <div class="t-output">
+| Zone              | Temp (°C) | Notes                                              |<br>
+|-------------------|-----------|----------------------------------------------------|<br>
+| Feed zone (Z1)    | <span class="highlight">170</span>       | Low friction entry, prevent premature melting       |<br>
+| Compression 1 (Z2)| <span class="highlight">200</span>       | Begin melt, HDPE Tm ~130°C, regrind needs +margin  |<br>
+| Compression 2 (Z3)| <span class="highlight">215</span>       | Progressive heating, homogenize melt                |<br>
+| Compression 3 (Z4)| <span class="highlight">220</span>       | Peak compression, avoid degradation ceiling         |<br>
+| Metering (Z5)     | <span class="highlight">215</span>       | Slight drop — stabilize melt viscosity             |<br>
+| Adapter           | <span class="highlight">210</span>       | Reduce pressure drop, maintain flow                |<br>
+| Die head          | <span class="ok">205</span>       | Final shaping — lower = better surface finish      |<br>
+<br>
+WARNING: For regrind material with possible contamination, add +0.2% Irganox 1010<br>
+or similar phenolic AO before adjusting metering zone above 220°C.<br>
+<br>
+<span class="ok">Recommended screw speed:</span> 75–90 RPM for 250 kg/h at D=90mm.<br>
+Estimated melt pressure at die: 180–220 bar.
+      </div>
+    </div>
+
+    <h2>My assessment</h2>
+
+    <p class="comment">
+      Profile is correct in structure. Feed zone at 170°C is slightly conservative for post-consumer HDPE
+      with possible moisture — I would raise it to 175°C in practice. Die head at 205°C is appropriate
+      for pelletizing; for pipe die you'd want 210–215°C. The Irganox recommendation is relevant
+      and I would actually use it. Screw speed range 75–90 RPM matches what I'd set manually.
+    </p>
+
+    <p class="comment">
+      What the model can't do: account for specific screw geometry (barrier vs conventional),
+      actual contamination level of the regrind batch, or real-time amperage feedback.
+      It gives a solid starting point — you still need to tune on the machine.
+    </p>
+
+    <h2>Follow-up prompt for fine-tuning</h2>
+
+    <div class="terminal-block">
+      <div class="t-prompt">ihor@recycle-llm:~$ ollama run mistral</div>
+      <div class="t-cmd">
+        &gt;&gt;&gt; Same extruder. If amperage rises 12% above baseline at Z3, what does it indicate
+        and which zone temperatures should I adjust first?
+      </div>
+      <div class="t-output">
+        A 12% amperage rise at Z3 (compression zone 2) typically indicates:<br>
+        1. Insufficient melt temperature — material not fully plasticized before compression<br>
+        2. Contamination (PP or PS fraction) raising viscosity<br>
+        3. Screw speed too high for the current feed rate<br>
+        <br>
+        <span class="ok">Adjust first:</span> Raise Z2 (Compression 1) by +5°C, monitor 10 min.<br>
+        If amperage persists: raise Z3 by +5°C.<br>
+        Do NOT raise feed zone — overheating feed causes bridging.
+      </div>
+    </div>
+
+    <p class="comment">
+      This is useful diagnostic logic. Matches my experience. The "do not raise feed zone" note
+      is correct and something a junior operator would miss.
+    </p>
+
+    <h2>Conclusion</h2>
+    <p>
+      Ollama + Mistral 7B on local hardware can generate a working temperature profile
+      for standard HDPE regrind in under 30 seconds. The output is a reliable starting point
+      that matches practical experience. The model handles follow-up diagnostic questions
+      correctly and does not hallucinate temperatures outside physically reasonable ranges.
+    </p>
+    <p>
+      Useful for: quick baseline profiles, training junior operators, checking your own
+      reasoning against a second "opinion" before starting a new batch.
+    </p>
+
+  </div>
+
+  <div style="margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+    <a href="index.html" class="btn-terminal">← back to articles</a>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-left">ihor@recycle-llm-terminal ~ # Munich, DE</div>
+  <div class="footer-right">
+    <a href="https://github.com/IgorUspehov/recycle-llm-terminal" target="_blank" class="footer-link">github</a>
+    <a href="https://igoruspehov.github.io/polymer-consult/" target="_blank" class="footer-link">polymer-consult</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HALS + Carbon Black for Recycled HDPE | recycle-llm-terminal</title>
+<meta name="description" content="LLM-assisted stabilizer package selection for outdoor recycled HDPE pipe: HALS, carbon black, antioxidant combination via CLI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="scanline"></div><div class="noise"></div>
+<nav class="nav">
+  <div class="nav-logo">~/recycle-llm-terminal<span class="cursor-blink">_</span></div>
+  <div class="nav-links">
+    <a href="../index.html" class="nav-link">home</a>
+    <a href="../tools.html" class="nav-link">tools</a>
+    <a href="index.html" class="nav-link active">articles</a>
+    <a href="../logs/index.html" class="nav-link">logs</a>
+    <a href="../contact.html" class="nav-link">contact</a>
+  </div>
+</nav>
+<main class="article-main">
+  <div class="article-meta">
+    <span class="art-date">2026-04-05</span>
+    <span class="art-tag">stabilization</span><span class="art-tag">HDPE</span><span class="art-tag">HALS</span><span class="art-tag">outdoor</span>
+  </div>
+  <div class="article-body">
+    <h1>HALS + carbon black for recycled HDPE outdoor pipe</h1>
+    <p>Application: corrugated drainage pipe from 100% recycled HDPE (mixed post-consumer + post-industrial). Required UV lifetime: minimum 10 years outdoor exposure in Central Europe. Wall thickness 3.5mm.</p>
+    <h2>The command</h2>
+    <div class="terminal-block">
+      <div class="t-prompt">ihor@recycle-llm:~$ llm "stabilizer package for outdoor HDPE pipe: 100% recycled HDPE mixed post-consumer + post-industrial, 10yr UV lifetime target, Central Europe, wall 3.5mm. Specify: carbon black % and particle size, HALS grade, antioxidant. Any interaction risks."</div>
+    </div>
+    <h2>Model output</h2>
+    <div class="terminal-block">
+      <div class="t-output">
+<span class="highlight">Recommended stabilizer package for outdoor recycled HDPE pipe (10yr / CE):</span><br><br>
+<span class="ok">Carbon black:</span><br>
+— Loading: 2.0–2.5% (pipe grade, not film grade)<br>
+— Particle size: 20–25nm (furnace black, N330 or equivalent)<br>
+— Distribution: critical — CB must be fully dispersed, no agglomerates<br>
+— Note: CB below 20nm = better UV absorption but harder dispersion<br><br>
+<span class="ok">HALS:</span><br>
+— Primary: Chimassorb 944 (polymeric, low migration, 10yr-grade) 0.3–0.5%<br>
+— OR: Tinuvin 622 at 0.4% (lower MW, faster activation, better for regrind)<br>
+— For recycled material: Tinuvin 622 preferred — less sensitive to AO antagonism<br><br>
+<span class="ok">Antioxidant:</span><br>
+— Primary AO: Irganox 1010, 0.15–0.2%<br>
+— Processing stabilizer: Irgafos 168, 0.1%<br><br>
+<span class="highlight">Interaction risk — CRITICAL:</span><br>
+HALS + acidic pigments or flame retardants = deactivation.<br>
+HALS high MW types (944) show antagonism with some phenolic AOs in regrind<br>
+with residual acid catalyst — test compatibility at 220°C/10min before scale-up.<br><br>
+<span class="ok">Estimated weathering performance at this package:</span> 12–15 yr CE exposure.
+      </div>
+    </div>
+    <h2>My assessment</h2>
+    <p class="comment">The Tinuvin 622 preference over Chimassorb 944 for regrind is a nuanced and correct recommendation — 944 can show antagonism with residual acid in recycled material. The CB particle size 20–25nm is correct for balance of UV absorption and dispersion. The HALS/AO antagonism warning is important and often overlooked. I'd run the 622 + 1010 + 168 package as described.</p>
+    <h2>Conclusion</h2>
+    <p>For stabilizer package design, LLM gives commercially realistic recommendations including the interaction risks that textbooks skip. The Tinuvin vs Chimassorb distinction for regrind is something that only comes from experience — the model got it right.</p>
+  </div>
+  <div style="margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+    <a href="index.html" class="btn-terminal">← back to articles</a>
+  </div>
+</main>
+<footer class="footer">
+  <div class="footer-left">ihor@recycle-llm-terminal ~ # Munich, DE</div>
+  <div class="footer-right">
+    <a href="https://github.com/IgorUspehov/recycle-llm-terminal" target="_blank" class="footer-link">github</a>
+    <a href="https://igoruspehov.github.io/polymer-consult/" target="_blank" class="footer-link">polymer-consult</a>
+  </div>
+</footer>
+</body>
+</html>
