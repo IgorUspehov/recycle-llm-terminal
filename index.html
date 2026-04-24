@@ -3,69 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recycle LLM Terminal | Open Source Project</title>
-    <meta name="description" content="Recycle LLM Terminal - инновационный интерфейс для работы с языковыми моделями.">
+    <title>Recycle LLM Terminal - Multi-Tool</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
-        :root { --bg-forest: #052e16; --accent-yellow: #fde047; --text-light: #f0fdf4; --card-green: #064e3b; }
-        body { background-color: var(--bg-forest); color: var(--text-light); font-family: sans-serif; margin: 0; }
-        .yellow-bg { background-color: var(--accent-yellow); color: var(--bg-forest); }
-        .terminal-window { background: #022c22; border: 1px solid #166534; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .article-card { background: var(--card-green); border-left: 4px solid var(--accent-yellow); transition: 0.3s; }
-        .article-card:hover { background: #065f46; }
+        [x-cloak] { display: none !important; }
+        :root { --main-green: #064e3b; --accent-yellow: #facc15; }
+        body { background-color: #f8fafc; color: #1e293b; font-family: sans-serif; }
+        .nav-bg { background-color: var(--main-green); }
+        .yellow-text { color: var(--accent-yellow); }
+        .btn-yellow { background-color: var(--accent-yellow); color: var(--main-green); }
+        .section-card { border-left: 4px solid var(--accent-yellow); background: white; }
     </style>
 </head>
 <body x-data="{ 
-    lang: 'ru',
-    translations: {
-        ru: { hero: 'Recycle LLM Terminal', sub: 'Интерфейс управления будущим. Эффективно и быстро.', navArt: 'Статьи', navRepo: 'Репозиторий', artH2: 'Блог и SEO материалы', art1T: 'Низкочастотные ключи 2026', art1D: 'Как продвигать ИТ-проекты через узкие поисковые запросы...', read: 'Читать далее' },
-        en: { hero: 'Recycle LLM Terminal', sub: 'Future interface. Efficient and fast.', navArt: 'Articles', navRepo: 'Repo', artH2: 'Blog & SEO Materials', art1T: 'Long-tail keywords 2026', art1D: 'How to promote IT projects using niche search queries...', read: 'Read more' },
-        de: { hero: 'Recycle LLM Terminal', sub: 'Zukunftsschnittstelle. Effizient und schnell.', navArt: 'Artikel', navRepo: 'Repo', artH2: 'Blog & SEO Materialien', art1T: 'Long-Tail-Keywords 2026', art1D: 'Wie man IT-Projekte über Nischen-Suchanfragen bewirbt...', read: 'Weiterlesen' }
+    lang: 'ru', 
+    section: 'home',
+    data: {
+        ru: {
+            nav: ['Главная', 'Документация', 'Статьи', 'API', 'Контакты'],
+            hero: 'Управление LLM Терминалом',
+            s1_title: 'Добро пожаловать',
+            s1_text: 'Полнофункциональный интерфейс для переработки данных и управления нейросетями.',
+            s2_title: 'Документация CLI',
+            s2_text: 'Инструкции по работе с командной строкой и интеграции модулей.',
+            s3_title: 'Статьи и SEO',
+            s3_text: 'Здесь будут ваши статьи с низкочастотными ключами для продвижения.',
+            s4_title: 'API Доступ',
+            s4_text: 'Настройки и ключи для подключения внешних сервисов.',
+            s5_title: 'Контакты',
+            s5_text: 'Связь с разработчиком и поддержка проекта.'
+        },
+        en: {
+            nav: ['Home', 'Docs', 'Articles', 'API', 'Contacts'],
+            hero: 'LLM Terminal Control',
+            s1_title: 'Welcome',
+            s1_text: 'Full-featured interface for data recycling and AI management.',
+            s2_title: 'CLI Documentation',
+            s2_text: 'Instructions for command line operations and module integration.',
+            s3_title: 'Articles & SEO',
+            s3_text: 'This section is for your long-tail keyword articles.',
+            s4_title: 'API Access',
+            s4_text: 'Settings and keys for connecting external services.',
+            s5_title: 'Contacts',
+            s5_text: 'Developer contact and project support.'
+        },
+        de: {
+            nav: ['Startseite', 'Docs', 'Artikel', 'API', 'Kontakte'],
+            hero: 'LLM Terminal Steuerung',
+            s1_title: 'Willkommen',
+            s1_text: 'Voll funktionsfähige Schnittstelle für Datenrecycling und KI-Management.',
+            s2_title: 'CLI Dokumentation',
+            s2_text: 'Anweisungen für Befehlszeilenoperationen und Modulintegration.',
+            s3_title: 'Artikel & SEO',
+            s3_text: 'Dieser Bereich ist für Ihre Long-Tail-Keyword-Artikel gedacht.',
+            s4_title: 'API-Zugriff',
+            s4_text: 'Einstellungen und Schlüssel für die Anbindung externer Dienste.',
+            s5_title: 'Kontakte',
+            s5_text: 'Entwicklerkontakt und Projektunterstützung.'
+        }
     }
 }">
-    <nav class="p-6 border-b border-green-800 flex justify-between items-center max-w-6xl mx-auto">
-        <div class="text-2xl font-black italic" style="color: var(--accent-yellow)">Recycle<span class="text-white">LLM</span></div>
-        <div class="flex items-center gap-6">
-            <a href="#articles" class="font-bold hover:text-yellow-400 transition" x-text="translations[lang].navArt"></a>
-            <div class="flex bg-black bg-opacity-30 p-1 rounded-lg border border-green-700">
+
+    <nav class="nav-bg p-4 sticky top-0 z-50 shadow-xl">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="font-black text-xl yellow-text uppercase italic">RecycleLLM</div>
+            
+            <div class="hidden md:flex gap-6 text-white text-sm font-bold">
+                <button @click="section = 'home'" class="hover:text-yellow-400 transition" x-text="data[lang].nav[0]"></button>
+                <button @click="section = 'docs'" class="hover:text-yellow-400 transition" x-text="data[lang].nav[1]"></button>
+                <button @click="section = 'articles'" class="hover:text-yellow-400 transition" x-text="data[lang].nav[2]"></button>
+                <button @click="section = 'api'" class="hover:text-yellow-400 transition" x-text="data[lang].nav[3]"></button>
+                <button @click="section = 'contact'" class="hover:text-yellow-400 transition" x-text="data[lang].nav[4]"></button>
+            </div>
+
+            <div class="flex gap-2 bg-green-900 p-1 rounded border border-green-700">
                 <template x-for="l in ['ru', 'en', 'de']">
-                    <button @click="lang = l" :class="lang === l ? 'yellow-bg' : 'text-white'" class="px-2 py-1 rounded text-xs font-bold uppercase transition" x-text="l"></button>
+                    <button @click="lang = l" :class="lang === l ? 'btn-yellow' : 'text-white'" class="px-2 py-1 rounded text-[10px] font-bold uppercase transition" x-text="l"></button>
                 </template>
             </div>
         </div>
     </nav>
 
-    <header class="max-w-6xl mx-auto py-20 px-6 text-center">
-        <h1 class="text-6xl font-black mb-6" x-text="translations[lang].hero"></h1>
-        <p class="text-xl text-green-200 mb-8" x-text="translations[lang].sub"></p>
-        <div class="terminal-window rounded-lg p-6 font-mono text-left max-w-2xl mx-auto border-t-4 border-yellow-400">
-            <div class="flex gap-2 mb-4">
-                <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                <div class="w-3 h-3 rounded-full bg-green-500"></div>
-            </div>
-            <p class="text-yellow-400">$ system_init --mode secure</p>
-            <p class="text-green-300">Loading modules... [OK]</p>
-            <p class="text-white">Kernel: LLM-Terminal-v4</p>
-            <p class="text-green-400 animate-pulse">_</p>
-        </div>
+    <header class="nav-bg py-16 text-center border-t border-green-800">
+        <h1 class="text-4xl md:text-5xl font-black text-white mb-4 uppercase tracking-tight" x-text="data[lang].hero"></h1>
+        <div class="h-1 w-32 bg-yellow-400 mx-auto"></div>
     </header>
 
-    <section id="articles" class="max-w-6xl mx-auto py-16 px-6">
-        <h2 class="text-3xl font-bold mb-10 italic uppercase" x-text="translations[lang].artH2"></h2>
-        <div class="grid md:grid-cols-2 gap-8">
-            <div class="article-card p-8 rounded shadow-xl">
-                <div class="text-yellow-400 text-xs font-bold mb-2 uppercase tracking-widest">SEO strategy</div>
-                <h3 class="text-2xl font-bold mb-4" x-text="translations[lang].art1T"></h3>
-                <p class="opacity-80 mb-6 text-green-100" x-text="translations[lang].art1D"></p>
-                <button class="font-bold border-b-2 border-yellow-400 pb-1 hover:text-yellow-400" x-text="translations[lang].read"></button>
-            </div>
-        </div>
-    </section>
+    <main class="max-w-5xl mx-auto py-12 px-6">
+        
+        <section x-show="section === 'home'" class="section-card p-8 rounded-lg shadow-sm">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-3">
+                <span class="w-2 h-8 bg-green-800"></span>
+                <span x-text="data[lang].s1_title"></span>
+            </h2>
+            <p class="text-lg text-slate-600" x-text="data[lang].s1_text"></p>
+        </section>
 
-    <footer class="py-12 border-t border-green-800 text-center opacity-50 text-sm">
-        <p>© 2026 Recycle LLM Project. GitHub Pages Ready.</p>
+        <section x-show="section === 'docs'" x-cloak class="section-card p-8 rounded-lg shadow-sm">
+            <h2 class="text-2xl font-bold mb-4" x-text="data[lang].s2_title"></h2>
+            <p class="mb-6 text-slate-600" x-text="data[lang].s2_text"></p>
+            <div class="bg-slate-900 p-4 rounded font-mono text-green-400 text-sm">
+                <p>$ recycle-cli --init</p>
+                <p>$ loading configuration...</p>
+                <p>$ status: ready</p>
+            </div>
+        </section>
+
+        <section x-show="section === 'articles'" x-cloak class="section-card p-8 rounded-lg shadow-sm">
+            <h2 class="text-2xl font-bold mb-4 text-green-900" x-text="data[lang].s3_title"></h2>
+            <p class="mb-8 text-slate-600" x-text="data[lang].s3_text"></p>
+            <div class="grid gap-4">
+                <div class="p-4 border border-slate-100 rounded hover:bg-slate-50 cursor-pointer transition">
+                    <h3 class="font-bold">Низкочастотный запрос #1...</h3>
+                    <p class="text-sm text-slate-500">Краткое описание статьи для SEO...</p>
+                </div>
+            </div>
+        </section>
+
+        <section x-show="section === 'api'" x-cloak class="section-card p-8 rounded-lg shadow-sm">
+            <h2 class="text-2xl font-bold mb-4" x-text="data[lang].s4_title"></h2>
+            <p class="text-slate-600" x-text="data[lang].s4_text"></p>
+        </section>
+
+        <section x-show="section === 'contact'" x-cloak class="section-card p-8 rounded-lg shadow-sm">
+            <h2 class="text-2xl font-bold mb-4" x-text="data[lang].s5_title"></h2>
+            <p class="text-slate-600" x-text="data[lang].s5_text"></p>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-8 text-slate-400 text-xs uppercase tracking-widest">
+        <p>© 2026 Recycle LLM Terminal • IgorUspehov</p>
     </footer>
+
 </body>
 </html>
