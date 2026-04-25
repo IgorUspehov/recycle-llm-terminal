@@ -1,118 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recycle LLM Terminal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <style>
-        [x-cloak] { display: none !important; }
-        body { background-color: #042f2e; color: #ecfdf5; font-family: monospace; }
-        .accent-yellow { color: #facc15; }
-        .bg-yellow { background-color: #facc15; color: #064e3b; }
-        .card-bg { background-color: #064e3b; border: 1px solid #14532d; }
-        .nav-item { cursor: pointer; text-transform: uppercase; font-size: 0.75rem; font-weight: bold; opacity: 0.6; }
-        .nav-item:hover, .active-nav { opacity: 1; color: #facc15; }
-        .active-nav { border-bottom: 2px solid #facc15; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>recycle-llm-terminal | Ihor Kriazhev</title>
+<meta name="description" content="Using LLM via Linux terminal to solve polymer recycling engineering tasks. Extrusion, granulation, compounding — solved with AI commands.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
 </head>
-<body x-data="{ 
-    lang: 'en', 
-    section: 'home',
-    t: {
-        en: {
-            nav: ['home', 'tools', 'articles', 'logs', 'contact'],
-            bio: 'I solve real polymer recycling problems using Large Language Models via Linux terminal. No diploma. No corporate slides. Just commands, outputs, and working results.',
-            stats: ['7+ years industry', '12 LLM pipelines', '840k tons CO2', '23k+ lines of scripts'],
-            wa: 'Write to me', loc: 'Munich, DE', more: '24 more entries'
-        },
-        de: {
-            nav: ['home', 'tools', 'artikel', 'logs', 'kontakt'],
-            bio: 'Ich löse reale Probleme beim Kunststoffrecycling mit LLMs über das Linux-Terminal. Kein Diplom. Keine Firmen-Slides. Nur Befehle, Ergebnisse und Resultate.',
-            stats: ['7+ Jahre Erfahrung', '12 LLM-Pipelines', '840k Tonnen CO2', '23k+ Zeilen Code'],
-            wa: 'Schreiben Sie mir', loc: 'München, DE', more: '24 weitere Einträge'
-        },
-        ru: {
-            nav: ['home', 'tools', 'articles', 'logs', 'contact'],
-            bio: 'Я решаю реальные проблемы переработки полимеров с помощью Large Language Models через терминал Linux. Без дипломов. Без корпоративных слайдов. Только команды, выводы и рабочие результаты.',
-            stats: ['7+ лет в индустрии', '12 LLM пайплайнов', '840k тонн CO2', '23k+ строк скриптов'],
-            wa: 'Напишите', loc: 'Мюнхен, DE', more: '24 статьи в архиве'
-        }
-    }
-}">
-    <nav class="p-4 border-b border-green-900 sticky top-0 bg-[#042f2e]/95 backdrop-blur z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <div class="font-bold text-green-500">ihor@recycle-llm:~$</div>
-            <div class="flex gap-6">
-                <template x-for="(item, index) in ['home', 'tools', 'articles', 'logs', 'contact']">
-                    <button @click="section = item" :class="section === item ? 'active-nav' : ''" class="nav-item px-1" x-text="'~/' + item"></button>
-                </template>
-            </div>
-            <div class="flex border border-green-800 rounded text-[10px] font-bold overflow-hidden">
-                <button @click="lang='en'" class="px-2 py-1" :class="lang=='en' ? 'bg-yellow' : ''">EN</button>
-                <button @click="lang='de'" class="px-2 py-1" :class="lang=='de' ? 'bg-yellow' : ''">DE</button>
-                <button @click="lang='ru'" class="px-2 py-1" :class="lang=='ru' ? 'bg-yellow' : ''">RU</button>
-            </div>
+<body>
+
+<div class="scanline"></div>
+<div class="noise"></div>
+
+<nav class="nav">
+  <div class="nav-logo">~/recycle-llm-terminal<span class="cursor-blink">_</span></div>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link active">home</a>
+    <a href="tools.html" class="nav-link">tools</a>
+    <a href="articles/index.html" class="nav-link">articles</a>
+    <a href="logs/index.html" class="nav-link">logs</a>
+    <a href="contact.html" class="nav-link">contact</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <section class="hero">
+    <div class="prompt-line">
+      <span class="prompt-user">ihor@recycle-llm</span><span class="prompt-sep">:</span><span class="prompt-dir">~</span><span class="prompt-dollar">$</span>
+      <span class="typed-text" id="typed">whoami</span>
+    </div>
+
+    <div class="hero-output">
+      <div class="output-block">
+        <div class="tag-line"># AI / LLM Engineering for Polymer Recycling</div>
+        <div class="spacer-sm"></div>
+        <p class="hero-desc">
+          I solve real polymer recycling problems using Large Language Models via Linux terminal.
+          No diploma. No corporate slides. Just commands, outputs, and working results.
+        </p>
+        <div class="spacer-sm"></div>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-num">25+</span><span class="stat-label">years extrusion</span></div>
+          <div class="stat"><span class="stat-num">3</span><span class="stat-label">LLM backends</span></div>
+          <div class="stat"><span class="stat-num">LDPE·HDPE·PP·ABS</span><span class="stat-label">materials</span></div>
         </div>
-    </nav>
-    <main class="max-w-6xl mx-auto p-6 md:p-12">
-        <div x-show="section === 'home'">
-            <h1 class="text-4xl md:text-6xl font-black accent-yellow mb-6 uppercase leading-tight">AI / LLM Engineering for Polymer Recycling</h1>
-            <p class="text-xl max-w-3xl mb-8 opacity-80" x-text="t[lang].bio"></p>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-                <template x-for="stat in t[lang].stats">
-                    <div class="card-bg p-4 rounded text-center border-l-2 border-yellow">
-                        <div class="accent-yellow text-xl font-bold" x-text="stat.split(' ')[0]"></div>
-                        <div class="text-[10px] uppercase opacity-60" x-text="stat.split(' ').slice(1).join(' ')"></div>
-                    </div>
-                </template>
-            </div>
-            <a href="https://wa.me/4915258400610" target="_blank" class="bg-yellow px-8 py-3 font-bold uppercase text-sm inline-block" x-text="t[lang].wa"></a>
-        </div>
-        <div x-show="section === 'tools'" x-cloak>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="card-bg p-6 rounded">
-                    <h3 class="accent-yellow font-bold uppercase mb-2">polymer-classifier</h3>
-                    <p class="text-xs opacity-70 mb-4">LLM-powered classification of polymer waste streams from spectrometer data.</p>
-                    <div class="bg-black/30 p-2 text-green-400 text-[10px] font-mono">$ cat resin.csv | python3 classify.py</div>
-                </div>
-                <div class="card-bg p-6 rounded">
-                    <h3 class="accent-yellow font-bold uppercase mb-2">melt-index-predictor</h3>
-                    <p class="text-xs opacity-70 mb-4">Regression pipeline for predicting MFI from process logs.</p>
-                    <div class="bg-black/30 p-2 text-green-400 text-[10px] font-mono">$ python3 melt_predict.py --temp 220</div>
-                </div>
-            </div>
-        </div>
-        <div x-show="section === 'articles'" x-cloak>
-            <div class="space-y-3">
-                <div class="card-bg p-4 flex justify-between"><span>building-a-polymer-classifier-with-gpt4o.md</span><span class="opacity-40">2024-11-18</span></div>
-                <div class="card-bg p-4 flex justify-between"><span>ollama-local-llm-for-plant-floor-data.md</span><span class="opacity-40">2024-10-05</span></div>
-                <div class="text-center opacity-40 text-xs mt-6" x-text="'$ cat .more_articles | wc -l → ' + t[lang].more"></div>
-            </div>
-        </div>
-        <div x-show="section === 'logs'" x-cloak>
-            <div class="bg-black/40 p-6 rounded font-mono text-xs text-green-500 space-y-1">
-                <p>[INFO] Batch #4412 processed — 847 samples classified.</p>
-                <p>[WARN] Extruder zone-3 temp deviation: 218°C.</p>
-                <p class="animate-pulse">_</p>
-            </div>
-        </div>
-        <div x-show="section === 'contact'" x-cloak>
-            <div class="card-bg p-8 max-w-xl border-l-4 border-yellow">
-                <p class="mb-4 accent-yellow"># contact --me</p>
-                <p class="mb-2">Email: ihor@recycle-llm.dev</p>
-                <p class="mb-6">Location: <span x-text="t[lang].loc"></span></p>
-                <a href="https://wa.me/4915258400610" class="bg-yellow px-6 py-2 font-bold uppercase text-xs inline-block" x-text="t[lang].wa"></a>
-            </div>
-        </div>
-    </main>
-    <footer class="max-w-6xl mx-auto p-12 border-t border-green-900 text-[10px] opacity-40 flex justify-between uppercase font-bold tracking-widest">
-        <div x-text="'ihor@recycle-llm-terminal ~ # ' + t[lang].loc"></div>
-        <div class="flex gap-4">
-            <a href="https://github.com/IgorUspehov" class="hover:text-yellow-400">github</a>
-            <a href="mailto:ihor@recycle-llm.dev" class="hover:text-yellow-400">email</a>
-        </div>
-    </footer>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="prompt-dollar">$</span> cat capabilities.txt
+    </div>
+    <div class="capabilities-grid">
+      <div class="cap-card">
+        <div class="cap-icon">⚙</div>
+        <div class="cap-title">Extruder Temperature Profiles</div>
+        <div class="cap-cmd">$ ollama run mistral "temperature profile HDPE regrind 250kg/h"</div>
+        <div class="cap-desc">Calculate zone-by-zone temperature profiles for recycled LDPE, HDPE, PP using Ollama locally.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🧪</div>
+        <div class="cap-title">Formulation / Compound Recipes</div>
+        <div class="cap-cmd">$ llm "recipe: 70% HDPE canisters + 30% chalk, MFI stable"</div>
+        <div class="cap-desc">Filler optimization, stabilizer dosing, compatibilizer selection via CLI prompts.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">📊</div>
+        <div class="cap-title">MFI Prediction & Drift Analysis</div>
+        <div class="cap-cmd">$ llm "predict MFI drift for LLDPE with 15% regrind over 3 passes"</div>
+        <div class="cap-desc">Melt flow index stability forecasting across reprocessing cycles.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🔪</div>
+        <div class="cap-title">Granulator Knife Wear Diagnostics</div>
+        <div class="cap-cmd">$ ollama run mistral "vibration pattern: agglomerator knives worn?"</div>
+        <div class="cap-desc">Diagnosing mechanical issues from vibration and throughput data patterns.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">❄</div>
+        <div class="cap-title">Cooling System Optimization</div>
+        <div class="cap-cmd">$ llm "air ring sizing for LDPE stretch film 3-layer 80mic"</div>
+        <div class="cap-desc">Air ring, water bath, and strand cooling calculations for flat-die and blown film lines.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🛡</div>
+        <div class="cap-title">UV / Thermal Stabilization</div>
+        <div class="cap-cmd">$ llm "HALS + carbon black selection for HDPE net recycling"</div>
+        <div class="cap-desc">Stabilizer package design for outdoor-grade recycled polyolefins.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="prompt-dollar">$</span> ls articles/ --recent
+    </div>
+    <div class="articles-list">
+      <a href="articles/llm-temperature-profile.html" class="article-row">
+        <span class="art-date">2026-04-20</span>
+        <span class="art-title">Extruder temperature profile via Ollama — HDPE regrind case</span>
+        <span class="art-tag">temperature</span>
+      </a>
+      <a href="articles/llm-mfi-prediction.html" class="article-row">
+        <span class="art-date">2026-04-18</span>
+        <span class="art-title">MFI drift prediction for LLDPE multilayer regrind</span>
+        <span class="art-tag">MFI</span>
+      </a>
+      <a href="articles/llm-chalk-recipe.html" class="article-row">
+        <span class="art-date">2026-04-15</span>
+        <span class="art-title">Chalk filler dosing in HDPE via CLI — formulation experiment</span>
+        <span class="art-tag">formulation</span>
+      </a>
+      <a href="articles/llm-vibration-knives.html" class="article-row">
+        <span class="art-date">2026-04-10</span>
+        <span class="art-title">Granulator knife wear — LLM vibration pattern analysis</span>
+        <span class="art-tag">diagnostics</span>
+      </a>
+      <a href="articles/llm-hals-stabilization.html" class="article-row">
+        <span class="art-date">2026-04-05</span>
+        <span class="art-title">HALS + carbon black for recycled HDPE outdoor pipe</span>
+        <span class="art-tag">stabilization</span>
+      </a>
+    </div>
+    <div class="view-all">
+      <a href="articles/index.html" class="btn-terminal">→ view all articles</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="prompt-dollar">$</span> tail -n 3 logs/recent.log
+    </div>
+    <div class="log-preview">
+      <div class="log-entry">
+        <span class="log-ts">[2026-04-24 09:12]</span>
+        <span class="log-cmd">ollama run mistral "PP weld line — injection pressure 1400 bar, temperature 230°C, gate 0.8mm"</span>
+      </div>
+      <div class="log-entry">
+        <span class="log-ts">[2026-04-23 16:40]</span>
+        <span class="log-cmd">llm "LDPE film: streaks at 60m/min — diagnose die head contamination or cooling ring"</span>
+      </div>
+      <div class="log-entry">
+        <span class="log-ts">[2026-04-22 11:05]</span>
+        <span class="log-cmd">ollama run codellama "python script: monitor extruder amperage csv, flag +15% deviation"</span>
+      </div>
+    </div>
+    <div class="view-all">
+      <a href="logs/index.html" class="btn-terminal">→ view full log</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-left">ihor@recycle-llm-terminal ~ # Munich, DE</div>
+  <div class="footer-right">
+    <a href="https://github.com/IgorUspehov/recycle-llm-terminal" target="_blank" class="footer-link">github</a>
+    <a href="https://igoruspehov.github.io/polymer-consult/" target="_blank" class="footer-link">polymer-consult</a>
+  </div>
+</footer>
+
+<script src="js/terminal.js"></script>
 </body>
 </html>
